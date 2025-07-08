@@ -121,13 +121,8 @@ pip install -r requirements.txt
 Run the Flask-Migrate commands to create and apply the database schema to your local database.
 
 ```bash
-# Initialize the migrations directory (run only once per project)
 flask db init
-
-# Create the migration script from your models
 flask db migrate -m "Initial migration"
-
-# Apply the migration to your local database to create the tables
 flask db upgrade
 ```
 
