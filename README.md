@@ -72,7 +72,6 @@ Now, generate the first migration script based on the models defined in `app/mod
 docker-compose run --rm api flask db migrate -m "Initial migration with user and article tables"
 ```
 
-After this, you should see a new `migrations/` directory in your project. It's recommended to commit this directory to your version control system (Git).
 
 ---
 
@@ -96,6 +95,49 @@ To stop the application, press `Ctrl+C` in the terminal and then run:
 ```bash
 docker-compose down
 ```
+
+### Option 2: Running Locally (Alternative for Development)
+
+This method is useful if you want to use your local IDE's debugger and tools directly.
+
+**1. Set up a Virtual Environment:**
+Create and activate a Python virtual environment to keep dependencies isolated.
+
+```bash
+python -m venv venv
+venv\Scripts\Activate
+```
+
+**2. Install Dependencies:**
+Install all required Python packages from the requirements file.
+
+```bash
+pip install -r requirements.txt
+```
+
+**3. Configure Environment for Local Database:**
+
+**4. Setup and Migrate the Database:**
+Run the Flask-Migrate commands to create and apply the database schema to your local database.
+
+```bash
+# Initialize the migrations directory (run only once per project)
+flask db init
+
+# Create the migration script from your models
+flask db migrate -m "Initial migration"
+
+# Apply the migration to your local database to create the tables
+flask db upgrade
+```
+
+**5. Run the Development Server:**
+Start the Flask application.
+
+```bash
+flask run
+```
+The API will be available at `http://localhost:5000`.
 
 ---
 
