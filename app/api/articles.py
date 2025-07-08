@@ -38,13 +38,12 @@ class ArticleListView(MethodView):
         content = data.get('content')
 
         if not title or not isinstance(title, str):
-            return jsonify({"msg": "Missing or invalid 'title' field"}), 400 # 400 is more appropriate here
+            return jsonify({"msg": "Missing or invalid 'title' field"}), 400
 
         if not content or not isinstance(content, str):
             return jsonify({"msg": "Missing or invalid 'content' field"}), 400
-        # The identity from the token is now the username (a string)
+        
         current_username = get_jwt_identity()
-        # We must look up the user in the database to get their ID
         user = User.query.filter_by(username=current_username).first_or_404()
         
         new_article = Article(
@@ -65,7 +64,7 @@ class ArticleView(MethodView):
 
         current_username = get_jwt_identity()
         user = User.query.filter_by(username=current_username).first_or_404()
-        # Track this view using the integer user ID
+
         recently_viewed.add_viewed_article(user_id=user.id, article_id=article_id)
 
         return jsonify({
@@ -81,7 +80,7 @@ class ArticleView(MethodView):
         article = Article.query.get_or_404(article_id)
         current_username = get_jwt_identity()
         user = User.query.filter_by(username=current_username).first_or_404()
-        # Check ownership using the integer ID
+        
         if article.user_id != user.id:
             return jsonify({"msg": "Forbidden: You are not the author"}), 403
 
@@ -96,7 +95,7 @@ class ArticleView(MethodView):
         article = Article.query.get_or_404(article_id)
         current_username = get_jwt_identity()
         user = User.query.filter_by(username=current_username).first_or_404()
-        # Check ownership using the integer ID
+        
         if article.user_id != user.id:
             return jsonify({"msg": "Forbidden: You are not the author"}), 403
 
